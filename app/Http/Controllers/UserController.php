@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -10,4 +11,17 @@ class UserController extends Controller
     {
         return View('users/create');
     }
+
+    /**
+     *  display one user
+     *
+     * @http get
+     * @return obj  pages
+     */
+    public function show(User $user)
+    {
+        return view('users.show', compact('user'));
+    }
+
+
 }
