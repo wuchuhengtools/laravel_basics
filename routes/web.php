@@ -20,7 +20,14 @@ Route::get('/about', 'StaticPagesController@about')->name('about');
 
 Route::get('/singup', 'UserController@create')->name('signup');
 
-Route::resource('users', 'UserController');
+//Route::resource('users', 'UserController');
+Route::get('/users', 'UserController@index')->name('users.index');
+Route::get('/users/create', 'UserController@create')->name('users.create');
+Route::get('/users/{user}', 'UserController@show')->name('users.show');
+Route::post('/users', 'UserController@store')->name('users.store');
+Route::get('/users/{user}/edit', 'UserController@edit')->name('users.edit');
+Route::patch('/users/{user}', 'UserController@update')->name('users.update');
+Route::delete('/users/{user}', 'UserController@destroy')->name('users.destroy');
 
 Route::get('login', 'SessionsController@create')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
