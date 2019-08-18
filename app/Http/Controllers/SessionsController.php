@@ -8,6 +8,18 @@ use Auth;
 class SessionsController extends Controller
 {
     /**
+     *
+     *
+     *
+     */
+    public function __construct()
+    {
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
+    /**
      *  登录视图
      *
      * @return void
@@ -31,12 +43,13 @@ class SessionsController extends Controller
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
             session()->flash('success', '欢迎回来！');
-            return redirect()->route('users.show', [Auth::user()]);
+            // 优先返回上次没登录无权访问的页面，没有就返回个人主页
+            $fallback = route('users.show', Auth::user());
+            return redirect()->intended($fallback);
         } else {
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
             return redirect()->back()->withInput();
         }
-
     }
 
     /*
