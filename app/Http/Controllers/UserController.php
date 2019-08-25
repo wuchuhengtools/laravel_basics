@@ -30,7 +30,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(1);
+        $users = User::paginate(5);
+
         return view('users.index', compact('users'));
     }
 
@@ -115,4 +116,16 @@ class UserController extends Controller
 
           return redirect()->route('users.show', $user);
       }
+
+      /**
+       *  删除用户
+       * @return obj 重定向返回
+       */
+      public function destroy(User $user)
+      {
+            $user->delete();
+            session()->flash('info', '成功删除用户');
+            return back();
+      }
+
 }
