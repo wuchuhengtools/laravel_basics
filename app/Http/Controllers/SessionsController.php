@@ -40,7 +40,6 @@ class SessionsController extends Controller
             'email' => 'required|email|max:255',
             'password' => 'required'
         ]);
-
         if (Auth::attempt($credentials, $request->has('remember'))) {
             if (Auth::user()->activated) {
                 session()->flash('success', '欢迎回来！');
@@ -49,7 +48,7 @@ class SessionsController extends Controller
                 return redirect()->intended($fallback);
             } else {
                 Auth::logout();
-                session()->flash('error', '验证邮件已发送到你的注册邮箱上，请注意查收。');
+                session()->flash('danger', '验证邮件已发送到你的注册邮箱上，请注意查收并激活帐号。');
                 return redirect('/');
             }
         } else {

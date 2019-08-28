@@ -155,7 +155,7 @@ class UserController extends Controller
     public function confirmEmail(string $token)
     {
         $user = User::where('activation_token', $token)->firstOrFail();
-        $user->activation_token = true;
+        $user->activated = true;
         $user->save();
         session()->flash('sucess', '帐号激活成功！');
         Auth::login($user);
